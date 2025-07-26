@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuários Cadastrados</title>
+  <link rel="stylesheet" href="teste-usuarios.css">
+</head>
+<body>
+  <h1>Usuários Cadastrados</h1>
+  <div class="container">
+    <table id="tabelaUsuarios">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Usuário</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas serão adicionadas via JS -->
+      </tbody>
+    </table>
+    <!-- Adicione isso dentro do <body>, logo abaixo da <h1> -->
+      <br><br>
+<a href="index.html" class="btn-voltar">⬅ Voltar para a Tela Principal</a>
+
+  </div>
+   
+  <script>
+    function carregarUsuarios() {
+      fetch("http://localhost:3000/usuarios")
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#tabelaUsuarios tbody");
+          tbody.innerHTML = ""; // Limpa antes de popular
+          data.forEach(usuario => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${usuario.id}</td>
+              <td>${usuario.nome}</td>
+              <td>${usuario.email}</td>
+              <td>${usuario.usuario}</td>
+              <td><button class="btn-excluir" onclick="excluirUsuario(${usuario.id})">Excluir</button></td>
+            `;
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error("Erro ao buscar usuários:", error);
+          const tbody = document.querySelector("#tabelaUsuarios tbody");
+          tbody.innerHTML = `<tr><td colspan="5">Erro ao carregar os usuários.</td></tr>`;
+        });
+    }
+
+    function excluirUsuario(id) {
+      if (confirm("Tem certeza que deseja excluir este usuário?")) {
+        fetch(`http://localhost:3000/usuarios/${id}`, { method: "DELETE" })
+          .then(res => res.json())
+          .then(data => {
+            alert(data.message);
+            carregarUsuarios(); // Recarrega a lista após exclusão
+          })
+          .catch(error => {
+            alert("Erro ao excluir o usuário.");
+            console.error(error);
+          });
+      }
+    }
+
+    // Chama ao abrir a página
+    carregarUsuarios();
+  </script>
+</body>
+</html>

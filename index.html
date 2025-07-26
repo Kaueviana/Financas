@@ -1,110 +1,152 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema Financeiro</title>
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema Financeiro</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <style>
+    a.button {
+  background-color: #222421;
+  color: white;
+  margin-top: 10px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+  </style>
 </head>
+
 <body>
-    <header class="topo">
-        <h2></h2>
-        </header>
-       
-    <main>
-        <h1>SISTEMA DE FINANÇAS</h1>
-        <div class="resumo">
-            <div>Entrada: R$ <span class="entradas">0.00</span></div>
-            <div>Saída: R$ <span class="saidas">0.00</span></div>
-            <div>Faturamento: R$ <span class="total">0.00</span></div>
-        </div>
+  <div class="topo">
+    <img src="img/logo (2).PNG" alt="Logo Finanças do Viana" class="logo">
+    
 
-        <div class="novoItem">
-            <div class="descricao">
-                <label for="desc">Descrição</label>
-                <input class="c-desc"  type="text" id="desc">
-            </div>
-            <div class="valorT">
-                <label for="valo">Valor</label>
-                <input class="c-valor"  type="number" id="valo">
-            </div>
-            <div class="tipo">
-                <label for="type">Tipo</label>
-                <select class="c-tipo" id="type">
-                    <option>Entrada</option>
-                    <option>Saída</option>
-                </select>
-            </div>
-            <div class="data">
-                <label for="data">Data</label>
-                <input class="c-data" type="date" id="data" value="">
-            </div>
-            <button id="botaoN">Incluir</button>
-        </div>
+  </div>
 
-        <!-- Campos para filtragem por data -->
+  <main>
+    <div class="resumo">
+      <div> <p style="font-size: small;"> Entradas </p><br><br> 
+       R$ <span class="entradas">0.00</span></div>
+      <div> <p style="font-size: small;"> Saidas </p><br><br> 
+       R$ <span class="saidas">0.00</span></div>
+       <div> <p style="font-size: small;"> Faturamento</p><br><br> 
+       R$ <span class="total">0.00</span></div>
+    </div>
 
-        <h2 class="filtrar">FILTRAR MOVIMENTAÇÃO POR DATA</h2>
-        <div class="filtroData">
-            <div>
-                <label for="dataInicio">Data Início</label>
-                <input class="c-inicio" type="date" id="dataInicio">
-            </div>
-            <div>
-                <label for="dataFim">Data Fim</label>
-                <input class="c-fim" type="date" id="dataFim">
-            </div>
-            <button id="botaoFiltrar">Filtrar</button>
-        </div>
+    <div class="novoItem">
+      <div class="descricao">
+        <label for="desc">Descrição</label>
+        <input class="c-desc" type="text" id="desc">
+      </div>
+      <div class="valorT">
+        <label for="valo">Valor</label>
+        <input class="c-valor" type="number" id="valo">
+      </div>
+      <div class="tipo">
+        <label for="type">Tipo</label>
+        <select class="c-tipo" id="type">
+          <option>Entrada</option>
+          <option>Saída</option>
+        </select>
+      </div>
+      <div class="data">
+        <label for="data">Data</label>
+        <input class="c-data" type="date" id="data" value="">
+      </div>
+      <button id="botaoN">Incluir</button>
+    </div>
 
-        <div class="tabela">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Descrição</th>
-                        <th class="colunaValor">Valor</th>
-                        <th class="colunaTipo">Tipo</th>
-                        <th>Data</th>
-                        <th class="colunaAcao"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dados adicionados dinamicamente -->
-                </tbody>
-            </table>
-            
-        </div>
-        
-        <div class="grafico">
-            <canvas id="graficoResumo" width="400" height="200"></canvas>
-        </div>
-        <div class="deta">
+    <h2 class="filtrar">FILTRAR MOVIMENTAÇÃO POR DATA</h2>
+    <div class="filtroData">
+      <div class="filtro">
+        <label for="dataInicio">Data Início</label>
+        <input class="c-inicio" type="date" id="dataInicio">
+      </div>
+      <div>
+        <label for="dataFim">Data Fim</label>
+        <input class="c-fim" type="date" id="dataFim">
+      </div>
+      <button id="botaoFiltrar">Filtrar</button>
+      <a href="cadastrar.html" class="button">Cadastrar novo usuário</a>
+      <a href="teste-usuarios.html" class="button">Usuário Cadastrados</a>
+      <a href="login.html" class="button">Sair</a>
 
-            <button id="resumoDetalhado">Resumo Detalhado</button>
-           
-        </div>
-        <!-- Modal para exibir o resumo detalhado -->
-        </div>
-        <div id="modalResumo" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>RESUMO DETALHADO</h2>
-                <div>
-                    <h3>Entradas</h3>
-                    <ul id="detalhesEntradas"></ul>
-                </div>
-                <div>
-                    <h3>Saídas</h3>
-                    <ul id="detalhesSaidas"></ul>
-                <button id="exportarTexto">Exportar como Texto</button>
-                <button id="exportarCSV">Exportar como CSV</button>
-                </div>
-               </div>
-              
-         </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+
+    </div>
+
+    <div class="tabela">
+      <table>
+        <thead>
+          <tr>
+            <th>Descrição</th>
+            <th class="colunaValor">Valor</th>
+            <th class="colunaTipo">Tipo</th>
+            <th>Data</th>
+            <th class="colunaAcao"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dados adicionados dinamicamente -->
+        </tbody>
+      </table>
+
+      <div id="deta">
+        <button id="resumoDetalhado">Resumo Detalhado</button>
+      </div>
+
+      <!-- <div class="voltar-home">
+        <a href="home.html" class="button-voltar">← Voltar para Home</a>
+      </div> -->
+    </div>
+
+    <div id="modalResumo" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>RESUMO DETALHADO</h2>
+        <div>
+          <h3>Entradas</h3>
+          <ul id="detalhesEntradas"></ul>
+        </div>
+        <div>
+          <h3>Saídas</h3>
+          <ul id="detalhesSaidas"></ul>
+          <button id="exportarCSV">Exportar como CSV</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <!-- flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+
+<script>
+  flatpickr(".c-data", {
+    locale: "pt",
+    dateFormat: "d/m/Y"
+  });
+
+  flatpickr(".c-inicio", {
+    locale: "pt",
+    dateFormat: "d/m/Y"
+  });
+
+  flatpickr(".c-fim", {
+    locale: "pt",
+    dateFormat: "d/m/Y"
+  });
+</script>
+
 </body>
 </html>
